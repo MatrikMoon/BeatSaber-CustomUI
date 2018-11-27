@@ -16,7 +16,7 @@ namespace CustomUI.GameplaySettings
         private Button _pageDownButton = null;
         private Button _pageUpButton = null;
         private int _listIndex = 0;
-        private IList<object> customOptions = new List<object>();
+        private IList<GameOption> customOptions = new List<GameOption>();
 
         private static GameplaySettingsUI _instance = null;
         public static GameplaySettingsUI Instance
@@ -58,7 +58,7 @@ namespace CustomUI.GameplaySettings
         }
 
         //Returns a list of options for the current page index
-        private IList<object> GetOptionsForPage(int page)
+        private IList<GameOption> GetOptionsForPage(int page)
         {
             //Default options
             if (page == 0) return null;
@@ -77,8 +77,8 @@ namespace CustomUI.GameplaySettings
             defaults?.ToList().ForEach(x => x.gameObject.SetActive(defaultsActive));
 
             //Custom options
-            Instance.customOptions?.ToList().ForEach(x => x.GetField<GameObject>("gameObject").SetActive(false));
-            if (!defaultsActive) options?.ToList().ForEach(x => x.GetField<GameObject>("gameObject").SetActive(true));
+            Instance.customOptions?.ToList().ForEach(x => x.gameObject.SetActive(false));
+            if (!defaultsActive) options?.ToList().ForEach(x => x.gameObject.SetActive(true));
         }
 
         public static MultiSelectOption CreateListOption(string optionName)
@@ -169,10 +169,9 @@ namespace CustomUI.GameplaySettings
             }
 
             //Create custom options
-            foreach (object option in Instance.customOptions)
+            foreach (GameOption option in Instance.customOptions)
             {
-                //Due to possible "different" types (due to cross-plugin support), we need to do this through reflection
-                option.InvokeMethod("Instantiate");
+                option.Instantiate();
             }
         }
     }

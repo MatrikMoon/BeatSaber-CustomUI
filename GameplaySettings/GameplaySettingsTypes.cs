@@ -58,7 +58,7 @@ namespace CustomUI.GameplaySettings
             {
                 gmt.toggle.isOn = GetValue;
                 gmt.toggle.onValueChanged.RemoveAllListeners();
-                gmt.toggle.onValueChanged.AddListener((bool e) => { OnToggle?.Invoke(e); });
+                gmt.toggle.onValueChanged.AddListener((bool e) => OnToggle?.Invoke(e));
 
                 GameplayModifierParamsSO _gameplayModifier = new GameplayModifierParamsSO();
                 _gameplayModifier.SetPrivateField("_modifierName", optionName);
@@ -77,8 +77,6 @@ namespace CustomUI.GameplaySettings
                     hoverHint.SetPrivateField("_hoverHintController", hoverHintController);
                 }
             }
-
-           
 
             initialized = true;
         }
